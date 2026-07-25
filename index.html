@@ -1,403 +1,2438 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>貓咪大戰爭 × 快打旋風6 New Challenger 活動日程</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Oswald:wght@500;700&display=swap');
-        
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #0d1117;
-            color: #e2e8f0;
-            min-height: 100vh;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Challenger 活動日程 | 貓咪大戰爭 × 快打旋風6</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #30363d;
+    --text: #e2e8f0;
+    --muted: #8b949e;
+    --accent: #38bdf8;
+  }
 
-        .oswald { font-family: 'Oswald', sans-serif; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 1.25rem;
+    line-height: 1.5;
+  }
 
-        .main-title {
-            font-weight: 900;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-            background: linear-gradient(to right, #ffffff, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  header {
+    text-align: center;
+    padding: 1.5rem 0;
+  }
 
-        .day-group {
-            margin-bottom: 3rem;
-        }
+  h1 {
+    font-size: 1.75rem;
+    letter-spacing: .05em;
+    color: var(--accent);
+  }
 
-        .day-label {
-            display: inline-block;
-            background: #1e293b;
-            padding: 4px 20px;
-            border-radius: 4px 20px 0 0;
-            font-weight: 700;
-            color: #38bdf8;
-            border-left: 4px solid #38bdf8;
-            margin-bottom: -1px;
-            position: relative;
-            z-index: 10;
-        }
+  header p {
+    color: var(--muted);
+    font-size: .9rem;
+  }
 
-        .day-content {
-            background: rgba(22, 27, 34, 0.8);
-            border: 1px solid #30363d;
-            border-radius: 0 12px 12px 12px;
-            padding: 1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+  fieldset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border: 1px solid var(--border);
+    border-radius: .5rem;
+    padding: .6rem 1rem;
+    margin: 0 0 1.5rem;
+  }
 
-        .time-row {
-            display: flex;
-            border-bottom: 1px solid rgba(48, 54, 61, 0.5);
-            padding: 12px 0;
-            align-items: center;
-        }
-        .time-row:last-child { border-bottom: none; }
+  legend {
+    padding: 0 .5rem;
+    color: var(--muted);
+    font-size: .85rem;
+  }
 
-        .time-indicator {
-            width: 120px;
-            flex-shrink: 0;
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.95rem;
-            color: #8b949e;
-            text-align: center;
-            border-right: 1px solid #30363d;
-            margin-right: 15px;
-            line-height: 1.2;
-        }
+  fieldset label {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .85rem;
+    cursor: pointer;
+  }
 
-        .event-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 12px;
-            width: 100%;
-        }
+  button[type="reset"] {
+    font: inherit;
+    font-size: .85rem;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: .4rem;
+    padding: .3rem .8rem;
+    cursor: pointer;
+  }
+  button[type="reset"]:hover { border-color: var(--accent); color: var(--accent); }
 
-        .char-card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 10px 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.2s ease;
-            position: relative;
-        }
+  input[type="checkbox"] { accent-color: var(--accent); }
 
-        body.hide-completed .char-card.is-completed {
-            display: none !important;
-        }
+  details.day {
+    border: 1px solid var(--border);
+    border-radius: .5rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
 
-        .diff-easy { border-left: 4px solid #22c55e; }
-        .diff-mid { border-left: 4px solid #3b82f6; }
-        .diff-hard { border-left: 4px solid #f97316; }
-        .diff-extreme { border-left: 4px solid #ef4444; }
+  details.day summary {
+    cursor: pointer;
+    background: var(--panel);
+    padding: .6rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  details.day[open] summary { border-bottom: 1px solid var(--border); }
+  details.day:not([open]) summary { border-bottom: none; }
 
-        .char-info { display: flex; flex-direction: column; }
-        .char-name { font-weight: 700; font-size: 1rem; color: #f0f6fc; }
-        .char-diff { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+  details.day summary h2 {
+    display: inline;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
 
-        .diff-text-easy { color: #4ade80; }
-        .diff-text-mid { color: #60a5fa; }
-        .diff-text-hard { color: #fb923c; }
-        .diff-text-extreme { color: #f87171; }
-        
-        .char-card.is-completed {
-            opacity: 0.5;
-            filter: grayscale(0.5);
-        }
+  details.day > section {
+    padding: .75rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  details.day > section:last-child { border-bottom: none; }
 
-        .complete-cb {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: #38bdf8;
-            border-radius: 4px;
-        }
+  details.day h3 {
+    font-size: .85rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin: 0 0 .5rem;
+  }
 
-        .controls {
-            background: rgba(30, 41, 59, 0.5);
-            padding: 10px 24px;
-            border-radius: 30px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            margin-bottom: 2rem;
-            display: flex;
-            gap: 24px;
-            font-size: 0.85rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+  ul.events {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: .5rem;
+  }
 
-        .active-row {
-            background: rgba(56, 189, 248, 0.05);
-        }
-        .active-row .time-indicator {
-            color: #38bdf8;
-            font-weight: bold;
-        }
-        
-        .toggle-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            user-select: none;
-        }
-        .toggle-btn input { display: none; }
-        .toggle-switch {
-            width: 40px;
-            height: 20px;
-            background: #334155;
-            border-radius: 20px;
-            position: relative;
-            transition: 0.3s;
-        }
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: white;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: 0.3s;
-        }
-        .toggle-btn input:checked + .toggle-switch {
-            background: #38bdf8;
-        }
-        .toggle-btn input:checked + .toggle-switch::after {
-            left: 22px;
-        }
+  ul.events li {
+    border: 1px solid var(--border);
+    border-radius: .35rem;
+    background: var(--panel);
+  }
 
-        /* 響應式設計 */
-        @media (max-width: 640px) {
-            body {
-                padding: 10px;
-            }
-            .main-title {
-                font-size: 1.75rem;
-            }
-            .time-indicator {
-                width: 70px;
-                margin-right: 10px;
-                font-size: 0.8rem;
-            }
-            .event-grid {
-                grid-template-columns: 1fr;
-            }
-            .day-content {
-                padding: 0.5rem;
-            }
-            .controls {
-                gap: 12px;
-                padding: 10px 15px;
-            }
-        }
-    </style>
+  ul.events label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    padding: .5rem .7rem;
+    cursor: pointer;
+  }
+
+  ul.events .name { font-weight: 700; }
+  ul.events .diff { font-size: .75rem; color: var(--muted); }
+
+  ul.events li:has(input:checked) label { opacity: .55; text-decoration: line-through; }
+  form:not(:has(#show-completed:checked)) ul.events li:has(input:checked) { display: none; }
+
+  .js-warning {
+    background: rgba(56, 189, 248, .12);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    padding: .6rem 1rem;
+    border-radius: .5rem;
+    margin-bottom: 1rem;
+    font-size: .85rem;
+    text-align: center;
+  }
+
+  details.day.today summary {
+    background: rgba(56, 189, 248, .12);
+    border-left: 3px solid var(--accent);
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: .85rem;
+  }
+  footer a { color: inherit; }
+
+  @media (max-width: 480px) {
+    body { padding: .75rem; }
+    ul.events { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
-<body class="max-w-5xl mx-auto hide-completed">
+<body>
 
-    <header class="py-10 text-center">
-    <h1 class="main-title mb-2">NEW CHALLENGER</h1>
-    </header>
-    
-    <div class="flex justify-center">
-        <div class="controls items-center">
-            <label class="toggle-btn">
-                <span class="text-slate-300">顯示已完成關卡</span>
-                <input type="checkbox" id="show-completed-toggle" onchange="toggleCompletedVisibility()">
-                <div class="toggle-switch"></div>
-            </label>
+<noscript>
+  <p class="js-warning">偵測到您未啟用JavaScript，部分功能將受限。</p>
+</noscript>
 
-            <div class="h-4 w-[1px] bg-slate-700"></div>
+<header>
+  <h1>NEW CHALLENGER</h1>
+  <p>貓咪大戰爭 &times; 快打旋風6 活動日程</p>
+</header>
 
-            <label class="toggle-btn">
-                <span class="text-slate-300">隱藏過去日期</span>
-                <input type="checkbox" id="hide-past-toggle" onchange="togglePastVisibility()">
-                <div class="toggle-switch"></div>
-            </label>
+<main>
+  <form>
+    <fieldset>
+      <label><input type="checkbox" id="show-completed"> 顯示已完成關卡</label>
+      <label><input type="checkbox" id="hide-past"> 隱藏過去日期</label>
+      <button type="reset">重設</button>
+    </fieldset>
 
-            <div class="h-4 w-[1px] bg-slate-700"></div>
-            <button onclick="resetFilters()" class="hover:text-sky-400 transition-colors text-slate-300">重設</button>
-        </div>
-    </div>
+      <details class="day" data-date="2026-01-09" open>
+        <summary><h2><time datetime="2026-01-09">2026-01-09</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-09T12:00">12:00</time>&ndash;<time datetime="2026-01-09T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-09 12 VS布蘭卡 初級">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-09 12 VS塔爾錫 初級">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-09T15:00">15:00</time>&ndash;<time datetime="2026-01-09T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-09 15 VS櫻 困難">
+                <span class="name">VS櫻</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-09 15 VS路克 困難">
+                <span class="name">VS路克</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-09T18:00">18:00</time>&ndash;<time datetime="2026-01-09T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-09 18 VS肯 初級">
+                <span class="name">VS肯</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-09 18 VS本田 初級">
+                <span class="name">VS本田</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-09T21:00">21:00</time>&ndash;<time datetime="2026-01-09T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-09 21 VS倩咪 困難">
+                <span class="name">VS倩咪</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-09 21 VS蛛俐 困難">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-10" open>
+        <summary><h2><time datetime="2026-01-10">2026-01-10</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-10T00:00">00:00</time>&ndash;<time datetime="2026-01-10T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 00 VS肯 困難">
+                <span class="name">VS肯</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 00 VS本田 困難">
+                <span class="name">VS本田</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-10T03:00">03:00</time>&ndash;<time datetime="2026-01-10T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 03 VS倩咪 初級">
+                <span class="name">VS倩咪</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 03 VS蛛俐 初級">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-10T06:00">06:00</time>&ndash;<time datetime="2026-01-10T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 06 VS布蘭卡 困難">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 06 VS塔爾錫 困難">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-10T09:00">09:00</time>&ndash;<time datetime="2026-01-10T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 09 VS櫻 初級">
+                <span class="name">VS櫻</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 09 VS路克 初級">
+                <span class="name">VS路克</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-10T12:00">12:00</time>&ndash;<time datetime="2026-01-10T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 12 VS蓋爾 困難">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 12 VS桑吉爾夫 困難">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-10T15:00">15:00</time>&ndash;<time datetime="2026-01-10T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 15 VS沙卡特 中級">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 15 VS貝卡 中級">
+                <span class="name">VS貝卡</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-10T18:00">18:00</time>&ndash;<time datetime="2026-01-10T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 18 VS隆 困難">
+                <span class="name">VS隆</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 18 VS春麗 困難">
+                <span class="name">VS春麗</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-10T21:00">21:00</time>&ndash;<time datetime="2026-01-10T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 21 VS拜森 中級">
+                <span class="name">VS拜森</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-10 21 VS巴洛克 中級">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-11" open>
+        <summary><h2><time datetime="2026-01-11">2026-01-11</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-11T00:00">00:00</time>&ndash;<time datetime="2026-01-11T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 00 VS布蘭卡 初級">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 00 VS塔爾錫 初級">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-11T03:00">03:00</time>&ndash;<time datetime="2026-01-11T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 03 VS櫻 困難">
+                <span class="name">VS櫻</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 03 VS路克 困難">
+                <span class="name">VS路克</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-11T06:00">06:00</time>&ndash;<time datetime="2026-01-11T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 06 VS肯 初級">
+                <span class="name">VS肯</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 06 VS本田 初級">
+                <span class="name">VS本田</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-11T09:00">09:00</time>&ndash;<time datetime="2026-01-11T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 09 VS倩咪 困難">
+                <span class="name">VS倩咪</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 09 VS蛛俐 困難">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-11T12:00">12:00</time>&ndash;<time datetime="2026-01-11T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 12 VS隆 初級">
+                <span class="name">VS隆</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 12 VS春麗 初級">
+                <span class="name">VS春麗</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-11T15:00">15:00</time>&ndash;<time datetime="2026-01-11T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 15 VS拜森 超級難">
+                <span class="name">VS拜森</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 15 VS巴洛克 超級難">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-11T18:00">18:00</time>&ndash;<time datetime="2026-01-11T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 18 VS蓋爾 初級">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 18 VS桑吉爾夫 初級">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-11T21:00">21:00</time>&ndash;<time datetime="2026-01-11T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 21 VS沙卡特 超級難">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-11 21 VS貝卡 超級難">
+                <span class="name">VS貝卡</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-12" open>
+        <summary><h2><time datetime="2026-01-12">2026-01-12</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-12T00:00">00:00</time>&ndash;<time datetime="2026-01-12T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-12 00 VS倩咪 困難">
+                <span class="name">VS倩咪</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-12T03:00">03:00</time>&ndash;<time datetime="2026-01-12T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-12 03 VS隆 初級">
+                <span class="name">VS隆</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-12T06:00">06:00</time>&ndash;<time datetime="2026-01-12T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-12 06 VS布蘭卡 困難">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-12T09:00">09:00</time>&ndash;<time datetime="2026-01-12T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-12 09 VS拜森 中級">
+                <span class="name">VS拜森</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-12T12:00">12:00</time>&ndash;<time datetime="2026-01-12T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-12 12 VS隆 困難">
+                <span class="name">VS隆</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-12T15:00">15:00</time>&ndash;<time datetime="2026-01-12T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-12 15 VS布蘭卡 初級">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-12T18:00">18:00</time>&ndash;<time datetime="2026-01-12T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-12 18 VS拜森 超級難">
+                <span class="name">VS拜森</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-12T21:00">21:00</time>&ndash;<time datetime="2026-01-12T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-12 21 VS倩咪 初級">
+                <span class="name">VS倩咪</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-13" open>
+        <summary><h2><time datetime="2026-01-13">2026-01-13</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-13T00:00">00:00</time>&ndash;<time datetime="2026-01-13T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-13 00 VS塔爾錫 初級">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-13T03:00">03:00</time>&ndash;<time datetime="2026-01-13T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-13 03 VS春麗 困難">
+                <span class="name">VS春麗</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-13T06:00">06:00</time>&ndash;<time datetime="2026-01-13T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-13 06 VS蛛俐 初級">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-13T09:00">09:00</time>&ndash;<time datetime="2026-01-13T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-13 09 VS巴洛克 超級難">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-13T12:00">12:00</time>&ndash;<time datetime="2026-01-13T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-13 12 VS春麗 初級">
+                <span class="name">VS春麗</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-13T15:00">15:00</time>&ndash;<time datetime="2026-01-13T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-13 15 VS塔爾錫 困難">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-13T18:00">18:00</time>&ndash;<time datetime="2026-01-13T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-13 18 VS巴洛克 中級">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-13T21:00">21:00</time>&ndash;<time datetime="2026-01-13T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-13 21 VS蛛俐 困難">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-14" open>
+        <summary><h2><time datetime="2026-01-14">2026-01-14</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-14T00:00">00:00</time>&ndash;<time datetime="2026-01-14T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-14 00 VS櫻 困難">
+                <span class="name">VS櫻</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-14T03:00">03:00</time>&ndash;<time datetime="2026-01-14T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-14 03 VS蓋爾 初級">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-14T06:00">06:00</time>&ndash;<time datetime="2026-01-14T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-14 06 VS沙卡特 超級難">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-14T09:00">09:00</time>&ndash;<time datetime="2026-01-14T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-14 09 VS肯 初級">
+                <span class="name">VS肯</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-14T12:00">12:00</time>&ndash;<time datetime="2026-01-14T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-14 12 VS蓋爾 困難">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-14T15:00">15:00</time>&ndash;<time datetime="2026-01-14T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-14 15 VS櫻 初級">
+                <span class="name">VS櫻</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-14T18:00">18:00</time>&ndash;<time datetime="2026-01-14T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-14 18 VS肯 困難">
+                <span class="name">VS肯</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-14T21:00">21:00</time>&ndash;<time datetime="2026-01-14T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-14 21 VS沙卡特 中級">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-15" open>
+        <summary><h2><time datetime="2026-01-15">2026-01-15</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-15T00:00">00:00</time>&ndash;<time datetime="2026-01-15T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-15 00 VS本田 初級">
+                <span class="name">VS本田</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-15T03:00">03:00</time>&ndash;<time datetime="2026-01-15T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-15 03 VS桑吉爾夫 困難">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-15T06:00">06:00</time>&ndash;<time datetime="2026-01-15T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-15 06 VS貝卡 中級">
+                <span class="name">VS貝卡</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-15T09:00">09:00</time>&ndash;<time datetime="2026-01-15T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-15 09 VS路克 困難">
+                <span class="name">VS路克</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-15T12:00">12:00</time>&ndash;<time datetime="2026-01-15T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-15 12 VS桑吉爾夫 初級">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-15T15:00">15:00</time>&ndash;<time datetime="2026-01-15T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-15 15 VS本田 困難">
+                <span class="name">VS本田</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-15T18:00">18:00</time>&ndash;<time datetime="2026-01-15T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-15 18 VS路克 初級">
+                <span class="name">VS路克</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-15T21:00">21:00</time>&ndash;<time datetime="2026-01-15T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-15 21 VS貝卡 超級難">
+                <span class="name">VS貝卡</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-16" open>
+        <summary><h2><time datetime="2026-01-16">2026-01-16</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-16T00:00">00:00</time>&ndash;<time datetime="2026-01-16T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 00 VS布蘭卡 困難">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 00 VS塔爾錫 困難">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-16T03:00">03:00</time>&ndash;<time datetime="2026-01-16T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 03 VS拜森 中級">
+                <span class="name">VS拜森</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 03 VS巴洛克 中級">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-16T06:00">06:00</time>&ndash;<time datetime="2026-01-16T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 06 VS肯 困難">
+                <span class="name">VS肯</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 06 VS本田 困難">
+                <span class="name">VS本田</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-16T09:00">09:00</time>&ndash;<time datetime="2026-01-16T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 09 VS沙卡特 中級">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 09 VS貝卡 中級">
+                <span class="name">VS貝卡</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-16T12:00">12:00</time>&ndash;<time datetime="2026-01-16T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 12 VS隆 困難">
+                <span class="name">VS隆</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 12 VS春麗 困難">
+                <span class="name">VS春麗</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-16T15:00">15:00</time>&ndash;<time datetime="2026-01-16T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 15 VS櫻 初級">
+                <span class="name">VS櫻</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 15 VS路克 初級">
+                <span class="name">VS路克</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-16T18:00">18:00</time>&ndash;<time datetime="2026-01-16T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 18 VS蓋爾 困難">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 18 VS桑吉爾夫 困難">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-16T21:00">21:00</time>&ndash;<time datetime="2026-01-16T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 21 VS倩咪 初級">
+                <span class="name">VS倩咪</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-16 21 VS蛛俐 初級">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-17" open>
+        <summary><h2><time datetime="2026-01-17">2026-01-17</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-17T00:00">00:00</time>&ndash;<time datetime="2026-01-17T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 00 VS肯 初級">
+                <span class="name">VS肯</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 00 VS本田 初級">
+                <span class="name">VS本田</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-17T03:00">03:00</time>&ndash;<time datetime="2026-01-17T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 03 VS倩咪 困難">
+                <span class="name">VS倩咪</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 03 VS蛛俐 困難">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-17T06:00">06:00</time>&ndash;<time datetime="2026-01-17T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 06 VS布蘭卡 初級">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 06 VS塔爾錫 初級">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-17T09:00">09:00</time>&ndash;<time datetime="2026-01-17T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 09 VS櫻 困難">
+                <span class="name">VS櫻</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 09 VS路克 困難">
+                <span class="name">VS路克</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-17T12:00">12:00</time>&ndash;<time datetime="2026-01-17T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 12 VS蓋爾 初級">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 12 VS桑吉爾夫 初級">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-17T15:00">15:00</time>&ndash;<time datetime="2026-01-17T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 15 VS沙卡特 超級難">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 15 VS貝卡 超級難">
+                <span class="name">VS貝卡</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-17T18:00">18:00</time>&ndash;<time datetime="2026-01-17T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 18 VS隆 初級">
+                <span class="name">VS隆</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 18 VS春麗 初級">
+                <span class="name">VS春麗</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-17T21:00">21:00</time>&ndash;<time datetime="2026-01-17T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 21 VS拜森 超級難">
+                <span class="name">VS拜森</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-17 21 VS巴洛克 超級難">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-18" open>
+        <summary><h2><time datetime="2026-01-18">2026-01-18</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-18T00:00">00:00</time>&ndash;<time datetime="2026-01-18T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 00 VS隆 困難">
+                <span class="name">VS隆</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 00 VS春麗 困難">
+                <span class="name">VS春麗</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-18T03:00">03:00</time>&ndash;<time datetime="2026-01-18T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 03 VS櫻 初級">
+                <span class="name">VS櫻</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 03 VS路克 初級">
+                <span class="name">VS路克</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-18T06:00">06:00</time>&ndash;<time datetime="2026-01-18T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 06 VS蓋爾 困難">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 06 VS桑吉爾夫 困難">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-18T09:00">09:00</time>&ndash;<time datetime="2026-01-18T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 09 VS倩咪 初級">
+                <span class="name">VS倩咪</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 09 VS蛛俐 初級">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-18T12:00">12:00</time>&ndash;<time datetime="2026-01-18T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 12 VS布蘭卡 困難">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 12 VS塔爾錫 困難">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-18T15:00">15:00</time>&ndash;<time datetime="2026-01-18T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 15 VS拜森 中級">
+                <span class="name">VS拜森</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 15 VS巴洛克 中級">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-18T18:00">18:00</time>&ndash;<time datetime="2026-01-18T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 18 VS肯 困難">
+                <span class="name">VS肯</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 18 VS本田 困難">
+                <span class="name">VS本田</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-18T21:00">21:00</time>&ndash;<time datetime="2026-01-18T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 21 VS沙卡特 中級">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-18 21 VS貝卡 中級">
+                <span class="name">VS貝卡</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-19" open>
+        <summary><h2><time datetime="2026-01-19">2026-01-19</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-19T00:00">00:00</time>&ndash;<time datetime="2026-01-19T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-19 00 VS布蘭卡 初級">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-19T03:00">03:00</time>&ndash;<time datetime="2026-01-19T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-19 03 VS拜森 超級難">
+                <span class="name">VS拜森</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-19T06:00">06:00</time>&ndash;<time datetime="2026-01-19T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-19 06 VS倩咪 初級">
+                <span class="name">VS倩咪</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-19T09:00">09:00</time>&ndash;<time datetime="2026-01-19T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-19 09 VS布蘭卡 困難">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-19T12:00">12:00</time>&ndash;<time datetime="2026-01-19T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-19 12 VS隆 初級">
+                <span class="name">VS隆</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-19T15:00">15:00</time>&ndash;<time datetime="2026-01-19T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-19 15 VS倩咪 困難">
+                <span class="name">VS倩咪</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-19T18:00">18:00</time>&ndash;<time datetime="2026-01-19T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-19 18 VS拜森 中級">
+                <span class="name">VS拜森</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-19T21:00">21:00</time>&ndash;<time datetime="2026-01-19T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-19 21 VS隆 困難">
+                <span class="name">VS隆</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-20" open>
+        <summary><h2><time datetime="2026-01-20">2026-01-20</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-20T00:00">00:00</time>&ndash;<time datetime="2026-01-20T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-20 00 VS塔爾錫 困難">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-20T03:00">03:00</time>&ndash;<time datetime="2026-01-20T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-20 03 VS巴洛克 中級">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-20T06:00">06:00</time>&ndash;<time datetime="2026-01-20T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-20 06 VS春麗 困難">
+                <span class="name">VS春麗</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-20T09:00">09:00</time>&ndash;<time datetime="2026-01-20T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-20 09 VS蛛俐 初級">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-20T12:00">12:00</time>&ndash;<time datetime="2026-01-20T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-20 12 VS巴洛克 超級難">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-20T15:00">15:00</time>&ndash;<time datetime="2026-01-20T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-20 15 VS塔爾錫 初級">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-20T18:00">18:00</time>&ndash;<time datetime="2026-01-20T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-20 18 VS蛛俐 困難">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-20T21:00">21:00</time>&ndash;<time datetime="2026-01-20T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-20 21 VS春麗 初級">
+                <span class="name">VS春麗</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-21" open>
+        <summary><h2><time datetime="2026-01-21">2026-01-21</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-21T00:00">00:00</time>&ndash;<time datetime="2026-01-21T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-21 00 VS肯 初級">
+                <span class="name">VS肯</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-21T03:00">03:00</time>&ndash;<time datetime="2026-01-21T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-21 03 VS蓋爾 困難">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-21T06:00">06:00</time>&ndash;<time datetime="2026-01-21T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-21 06 VS沙卡特 中級">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-21T09:00">09:00</time>&ndash;<time datetime="2026-01-21T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-21 09 VS櫻 困難">
+                <span class="name">VS櫻</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-21T12:00">12:00</time>&ndash;<time datetime="2026-01-21T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-21 12 VS蓋爾 初級">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-21T15:00">15:00</time>&ndash;<time datetime="2026-01-21T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-21 15 VS沙卡特 超級難">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-21T18:00">18:00</time>&ndash;<time datetime="2026-01-21T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-21 18 VS櫻 初級">
+                <span class="name">VS櫻</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-21T21:00">21:00</time>&ndash;<time datetime="2026-01-21T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-21 21 VS肯 困難">
+                <span class="name">VS肯</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-22" open>
+        <summary><h2><time datetime="2026-01-22">2026-01-22</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-22T00:00">00:00</time>&ndash;<time datetime="2026-01-22T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-22 00 VS本田 困難">
+                <span class="name">VS本田</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-22T03:00">03:00</time>&ndash;<time datetime="2026-01-22T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-22 03 VS貝卡 中級">
+                <span class="name">VS貝卡</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-22T06:00">06:00</time>&ndash;<time datetime="2026-01-22T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-22 06 VS桑吉爾夫 困難">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-22T09:00">09:00</time>&ndash;<time datetime="2026-01-22T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-22 09 VS路克 初級">
+                <span class="name">VS路克</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-22T12:00">12:00</time>&ndash;<time datetime="2026-01-22T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-22 12 VS貝卡 超級難">
+                <span class="name">VS貝卡</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-22T15:00">15:00</time>&ndash;<time datetime="2026-01-22T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-22 15 VS本田 初級">
+                <span class="name">VS本田</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-22T18:00">18:00</time>&ndash;<time datetime="2026-01-22T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-22 18 VS路克 困難">
+                <span class="name">VS路克</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-22T21:00">21:00</time>&ndash;<time datetime="2026-01-22T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-22 21 VS桑吉爾夫 初級">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-23" open>
+        <summary><h2><time datetime="2026-01-23">2026-01-23</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-23T00:00">00:00</time>&ndash;<time datetime="2026-01-23T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 00 VS隆 初級">
+                <span class="name">VS隆</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 00 VS春麗 初級">
+                <span class="name">VS春麗</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-23T03:00">03:00</time>&ndash;<time datetime="2026-01-23T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 03 VS拜森 超級難">
+                <span class="name">VS拜森</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 03 VS巴洛克 超級難">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-23T06:00">06:00</time>&ndash;<time datetime="2026-01-23T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 06 VS蓋爾 初級">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 06 VS桑吉爾夫 初級">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-23T09:00">09:00</time>&ndash;<time datetime="2026-01-23T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 09 VS沙卡特 超級難">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 09 VS貝卡 超級難">
+                <span class="name">VS貝卡</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-23T12:00">12:00</time>&ndash;<time datetime="2026-01-23T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 12 VS布蘭卡 初級">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 12 VS塔爾錫 初級">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-23T15:00">15:00</time>&ndash;<time datetime="2026-01-23T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 15 VS櫻 困難">
+                <span class="name">VS櫻</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 15 VS路克 困難">
+                <span class="name">VS路克</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-23T18:00">18:00</time>&ndash;<time datetime="2026-01-23T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 18 VS肯 初級">
+                <span class="name">VS肯</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 18 VS本田 初級">
+                <span class="name">VS本田</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-23T21:00">21:00</time>&ndash;<time datetime="2026-01-23T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 21 VS倩咪 困難">
+                <span class="name">VS倩咪</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-23 21 VS蛛俐 困難">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-24" open>
+        <summary><h2><time datetime="2026-01-24">2026-01-24</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-24T00:00">00:00</time>&ndash;<time datetime="2026-01-24T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 00 VS肯 困難">
+                <span class="name">VS肯</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 00 VS本田 困難">
+                <span class="name">VS本田</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-24T03:00">03:00</time>&ndash;<time datetime="2026-01-24T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 03 VS倩咪 初級">
+                <span class="name">VS倩咪</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 03 VS蛛俐 初級">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-24T06:00">06:00</time>&ndash;<time datetime="2026-01-24T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 06 VS布蘭卡 困難">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 06 VS塔爾錫 困難">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-24T09:00">09:00</time>&ndash;<time datetime="2026-01-24T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 09 VS櫻 初級">
+                <span class="name">VS櫻</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 09 VS路克 初級">
+                <span class="name">VS路克</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-24T12:00">12:00</time>&ndash;<time datetime="2026-01-24T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 12 VS蓋爾 困難">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 12 VS桑吉爾夫 困難">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-24T15:00">15:00</time>&ndash;<time datetime="2026-01-24T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 15 VS沙卡特 中級">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 15 VS貝卡 中級">
+                <span class="name">VS貝卡</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-24T18:00">18:00</time>&ndash;<time datetime="2026-01-24T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 18 VS隆 困難">
+                <span class="name">VS隆</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 18 VS春麗 困難">
+                <span class="name">VS春麗</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-24T21:00">21:00</time>&ndash;<time datetime="2026-01-24T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 21 VS拜森 中級">
+                <span class="name">VS拜森</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-24 21 VS巴洛克 中級">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">中級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-25" open>
+        <summary><h2><time datetime="2026-01-25">2026-01-25</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-25T00:00">00:00</time>&ndash;<time datetime="2026-01-25T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 00 VS布蘭卡 初級">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 00 VS塔爾錫 初級">
+                <span class="name">VS塔爾錫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-25T03:00">03:00</time>&ndash;<time datetime="2026-01-25T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 03 VS櫻 困難">
+                <span class="name">VS櫻</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 03 VS路克 困難">
+                <span class="name">VS路克</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-25T06:00">06:00</time>&ndash;<time datetime="2026-01-25T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 06 VS肯 初級">
+                <span class="name">VS肯</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 06 VS本田 初級">
+                <span class="name">VS本田</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-25T09:00">09:00</time>&ndash;<time datetime="2026-01-25T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 09 VS倩咪 困難">
+                <span class="name">VS倩咪</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 09 VS蛛俐 困難">
+                <span class="name">VS蛛俐</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-25T12:00">12:00</time>&ndash;<time datetime="2026-01-25T14:00">14:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 12 VS隆 初級">
+                <span class="name">VS隆</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 12 VS春麗 初級">
+                <span class="name">VS春麗</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-25T15:00">15:00</time>&ndash;<time datetime="2026-01-25T17:00">17:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 15 VS拜森 超級難">
+                <span class="name">VS拜森</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 15 VS巴洛克 超級難">
+                <span class="name">VS巴洛克</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-25T18:00">18:00</time>&ndash;<time datetime="2026-01-25T20:00">20:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 18 VS蓋爾 初級">
+                <span class="name">VS蓋爾</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 18 VS桑吉爾夫 初級">
+                <span class="name">VS桑吉爾夫</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-25T21:00">21:00</time>&ndash;<time datetime="2026-01-25T23:00">23:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 21 VS沙卡特 超級難">
+                <span class="name">VS沙卡特</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-25 21 VS貝卡 超級難">
+                <span class="name">VS貝卡</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+      <details class="day" data-date="2026-01-26" open>
+        <summary><h2><time datetime="2026-01-26">2026-01-26</time></h2></summary>
+          <section>
+            <h3><time datetime="2026-01-26T00:00">00:00</time>&ndash;<time datetime="2026-01-26T02:00">02:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-26 00 VS拜森 超級難">
+                <span class="name">VS拜森</span>
+                <span class="diff">超級難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-26T03:00">03:00</time>&ndash;<time datetime="2026-01-26T05:00">05:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-26 03 VS隆 初級">
+                <span class="name">VS隆</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-26T06:00">06:00</time>&ndash;<time datetime="2026-01-26T08:00">08:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-26 06 VS布蘭卡 困難">
+                <span class="name">VS布蘭卡</span>
+                <span class="diff">困難</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+          <section>
+            <h3><time datetime="2026-01-26T09:00">09:00</time>&ndash;<time datetime="2026-01-26T11:00">11:00</time></h3>
+            <ul class="events">
+            <li>
+              <label>
+                <input type="checkbox" data-key="2026-01-26 09 VS倩咪 初級">
+                <span class="name">VS倩咪</span>
+                <span class="diff">初級</span>
+              </label>
+            </li>
+            </ul>
+          </section>
+      </details>
+  </form>
+</main>
 
-    <div id="schedule-root"> </div>
+<footer>
+  <p>Developed by <strong>internet cafe</strong></p>
+  <p><a href="https://github.com/kevin970712/new-challenger" target="_blank" rel="noopener">View on GitHub</a></p>
+</footer>
 
-    <footer class="mt-20 mb-10 pt-10 border-t border-slate-800 text-center">
-        <div class="flex flex-col items-center gap-2">
-            <div class="text-slate-400 text-sm tracking-wide">
-                Developed by <span class="text-slate-100 font-bold">internet cafe</span>
-            </div>
-            <a href="https://github.com/kevin970712/new-challenger" 
-               target="_blank" 
-               class="flex items-center gap-2 text-slate-500">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-                View on GitHub
-            </a>
-        </div>
-    </footer>
-        
-    <script>
-        const scheduleData = [
-            { date: "2026-01-09", slots: { 12: "VS布蘭卡 初級|VS塔爾錫 初級", 15: "VS櫻 困難|VS路克 困難", 18: "VS肯 初級|VS本田 初級", 21: "VS倩咪 困難|VS蛛俐 困難" }},
-            { date: "2026-01-10", slots: { 0: "VS肯 困難|VS本田 困難", 3: "VS倩咪 初級|VS蛛俐 初級", 6: "VS布蘭卡 困難|VS塔爾錫 困難", 9: "VS櫻 初級|VS路克 初級", 12: "VS蓋爾 困難|VS桑吉爾夫 困難", 15: "VS沙卡特 中級|VS貝卡 中級", 18: "VS隆 困難|VS春麗 困難", 21: "VS拜森 中級|VS巴洛克 中級" }},
-            { date: "2026-01-11", slots: { 0: "VS布蘭卡 初級|VS塔爾錫 初級", 3: "VS櫻 困難|VS路克 困難", 6: "VS肯 初級|VS本田 初級", 9: "VS倩咪 困難|VS蛛俐 困難", 12: "VS隆 初級|VS春麗 初級", 15: "VS拜森 超級難|VS巴洛克 超級難", 18: "VS蓋爾 初級|VS桑吉爾夫 初級", 21: "VS沙卡特 超級難|VS貝卡 超級難" }},
-            { date: "2026-01-12", slots: { 0: "VS倩咪 困難", 3: "VS隆 初級", 6: "VS布蘭卡 困難", 9: "VS拜森 中級", 12: "VS隆 困難", 15: "VS布蘭卡 初級", 18: "VS拜森 超級難", 21: "VS倩咪 初級" }},
-            { date: "2026-01-13", slots: { 0: "VS塔爾錫 初級", 3: "VS春麗 困難", 6: "VS蛛俐 初級", 9: "VS巴洛克 超級難", 12: "VS春麗 初級", 15: "VS塔爾錫 困難", 18: "VS巴洛克 中級", 21: "VS蛛俐 困難" }},
-            { date: "2026-01-14", slots: { 0: "VS櫻 困難", 3: "VS蓋爾 初級", 6: "VS沙卡特 超級難", 9: "VS肯 初級", 12: "VS蓋爾 困難", 15: "VS櫻 初級", 18: "VS肯 困難", 21: "VS沙卡特 中級" }},
-            { date: "2026-01-15", slots: { 0: "VS本田 初級", 3: "VS桑吉爾夫 困難", 6: "VS貝卡 中級", 9: "VS路克 困難", 12: "VS桑吉爾夫 初級", 15: "VS本田 困難", 18: "VS路克 初級", 21: "VS貝卡 超級難" }},
-            { date: "2026-01-16", slots: { 0: "VS布蘭卡 困難|VS塔爾錫 困難", 3: "VS拜森 中級|VS巴洛克 中級", 6: "VS肯 困難|VS本田 困難", 9: "VS沙卡特 中級|VS貝卡 中級", 12: "VS隆 困難|VS春麗 困難", 15: "VS櫻 初級|VS路克 初級", 18: "VS蓋爾 困難|VS桑吉爾夫 困難", 21: "VS倩咪 初級|VS蛛俐 初級" }},
-            { date: "2026-01-17", slots: { 0: "VS肯 初級|VS本田 初級", 3: "VS倩咪 困難|VS蛛俐 困難", 6: "VS布蘭卡 初級|VS塔爾錫 初級", 9: "VS櫻 困難|VS路克 困難", 12: "VS蓋爾 初級|VS桑吉爾夫 初級", 15: "VS沙卡特 超級難|VS貝卡 超級難", 18: "VS隆 初級|VS春麗 初級", 21: "VS拜森 超級難|VS巴洛克 超級難" }},
-            { date: "2026-01-18", slots: { 0: "VS隆 困難|VS春麗 困難", 3: "VS櫻 初級|VS路克 初級", 6: "VS蓋爾 困難|VS桑吉爾夫 困難", 9: "VS倩咪 初級|VS蛛俐 初級", 12: "VS布蘭卡 困難|VS塔爾錫 困難", 15: "VS拜森 中級|VS巴洛克 中級", 18: "VS肯 困難|VS本田 困難", 21: "VS沙卡特 中級|VS貝卡 中級" }},
-            { date: "2026-01-19", slots: { 0: "VS布蘭卡 初級", 3: "VS拜森 超級難", 6: "VS倩咪 初級", 9: "VS布蘭卡 困難", 12: "VS隆 初級", 15: "VS倩咪 困難", 18: "VS拜森 中級", 21: "VS隆 困難" }},
-            { date: "2026-01-20", slots: { 0: "VS塔爾錫 困難", 3: "VS巴洛克 中級", 6: "VS春麗 困難", 9: "VS蛛俐 初級", 12: "VS巴洛克 超級難", 15: "VS塔爾錫 初級", 18: "VS蛛俐 困難", 21: "VS春麗 初級" }},
-            { date: "2026-01-21", slots: { 0: "VS肯 初級", 3: "VS蓋爾 困難", 6: "VS沙卡特 中級", 9: "VS櫻 困難", 12: "VS蓋爾 初級", 15: "VS沙卡特 超級難", 18: "VS櫻 初級", 21: "VS肯 困難" }},
-            { date: "2026-01-22", slots: { 0: "VS本田 困難", 3: "VS貝卡 中級", 6: "VS桑吉爾夫 困難", 9: "VS路克 初級", 12: "VS貝卡 超級難", 15: "VS本田 初級", 18: "VS路克 困難", 21: "VS桑吉爾夫 初級" }},
-            { date: "2026-01-23", slots: { 0: "VS隆 初級|VS春麗 初級", 3: "VS拜森 超級難|VS巴洛克 超級難", 6: "VS蓋爾 初級|VS桑吉爾夫 初級", 9: "VS沙卡特 超級難|VS貝卡 超級難", 12: "VS布蘭卡 初級|VS塔爾錫 初級", 15: "VS櫻 困難|VS路克 困難", 18: "VS肯 初級|VS本田 初級", 21: "VS倩咪 困難|VS蛛俐 困難" }},
-            { date: "2026-01-24", slots: { 0: "VS肯 困難|VS本田 困難", 3: "VS倩咪 初級|VS蛛俐 初級", 6: "VS布蘭卡 困難|VS塔爾錫 困難", 9: "VS櫻 初級|VS路克 初級", 12: "VS蓋爾 困難|VS桑吉爾夫 困難", 15: "VS沙卡特 中級|VS貝卡 中級", 18: "VS隆 困難|VS春麗 困難", 21: "VS拜森 中級|VS巴洛克 中級" }},
-            { date: "2026-01-25", slots: { 0: "VS布蘭卡 初級|VS塔爾錫 初級", 3: "VS櫻 困難|VS路克 困難", 6: "VS肯 初級|VS本田 初級", 9: "VS倩咪 困難|VS蛛俐 困難", 12: "VS隆 初級|VS春麗 初級", 15: "VS拜森 超級難|VS巴洛克 超級難", 18: "VS蓋爾 初級|VS桑吉爾夫 初級", 21: "VS沙卡特 超級難|VS貝卡 超級難" }},
-            { date: "2026-01-26", slots: { 0: "VS拜森 超級難", 3: "VS隆 初級", 6: "VS布蘭卡 困難", 9: "VS倩咪 初級" }},
-        ];
-        let completedEvents = JSON.parse(localStorage.getItem('sf6_completed_events') || '[]');
-        let showCompleted = JSON.parse(localStorage.getItem('sf6_show_completed') || 'false');
-        let hidePast = JSON.parse(localStorage.getItem('sf6_hide_past') || 'false');
+<script>
+(function () {
+  "use strict";
+  var PREFIX = "sf6_schedule_";
+  var boxes = document.querySelectorAll('input[type="checkbox"][data-key]');
 
-        function getDiffKey(text) {
-            if (text.includes("超級難")) return "extreme";
-            if (text.includes("困難")) return "hard";
-            if (text.includes("中級")) return "mid";
-            return "easy";
-        }
+  boxes.forEach(function (box) {
+    var storageKey = PREFIX + box.dataset.key;
+    if (localStorage.getItem(storageKey) === "1") {
+      box.checked = true;
+    }
+    box.addEventListener("change", function () {
+      if (box.checked) {
+        localStorage.setItem(storageKey, "1");
+      } else {
+        localStorage.removeItem(storageKey);
+      }
+    });
+  });
 
-        function toggleEvent(eventUniqueKey) {
-            if (completedEvents.includes(eventUniqueKey)) {
-                completedEvents = completedEvents.filter(key => key !== eventUniqueKey);
-            } else {
-                completedEvents.push(eventUniqueKey);
-            }
-            localStorage.setItem('sf6_completed_events', JSON.stringify(completedEvents));
-            render();
-        }
+  var resetBtn = document.querySelector('button[type="reset"]');
+  if (resetBtn) {
+    resetBtn.addEventListener("click", function () {
+      window.setTimeout(function () {
+        boxes.forEach(function (box) {
+          localStorage.removeItem(PREFIX + box.dataset.key);
+        });
+      }, 0);
+    });
+  }
 
-        function toggleCompletedVisibility() {
-            showCompleted = document.getElementById('show-completed-toggle').checked;
-            localStorage.setItem('sf6_show_completed', JSON.stringify(showCompleted));
-            updateBodyClass();
-        }
+  var days = document.querySelectorAll("details.day[data-date]");
+  var todayStr = new Date().toLocaleDateString("sv-SE"); // 
 
-        function togglePastVisibility() {
+  days.forEach(function (day) {
+    if (day.dataset.date === todayStr) {
+      day.classList.add("today");
+    }
+  });
 
-            hidePast = document.getElementById('hide-past-toggle').checked;
+  var hidePastBox = document.getElementById("hide-past");
+  var hidePastKey = PREFIX + "hide_past";
 
-            localStorage.setItem('sf6_hide_past', JSON.stringify(hidePast));
+  function applyPastFilter() {
+    var hide = hidePastBox.checked;
+    days.forEach(function (day) {
+      var isPast = day.dataset.date < todayStr;
+      day.style.display = hide && isPast ? "none" : "";
+    });
+  }
 
-            render();
+  if (localStorage.getItem(hidePastKey) === "1") {
+    hidePastBox.checked = true;
+  }
+  applyPastFilter();
 
-        }
+  hidePastBox.addEventListener("change", function () {
+    if (hidePastBox.checked) {
+      localStorage.setItem(hidePastKey, "1");
+    } else {
+      localStorage.removeItem(hidePastKey);
+    }
+    applyPastFilter();
+  });
+})();
+</script>
 
-        function updateBodyClass() {
-            if (showCompleted) {
-                document.body.classList.remove('hide-completed');
-            } else {
-                document.body.classList.add('hide-completed');
-            }
-        }
-
-        function resetFilters() {
-            if(confirm("確定要重設所有關卡的完成狀態嗎？")) {
-                completedEvents = [];
-                localStorage.setItem('sf6_completed_events', JSON.stringify(completedEvents));
-                render();
-            }
-        }
-
-        function render() {
-            const root = document.getElementById('schedule-root');
-            root.innerHTML = '';
-            const now = new Date();
-            const todayStr = now.toLocaleDateString('sv-SE');
-            const currentHour = now.getHours();
-
-            document.getElementById('show-completed-toggle').checked = showCompleted;
-            updateBodyClass();
-
-            scheduleData.forEach(day => {
-                if (hidePast && day.date < todayStr) {
-                    return;
-                }
-                const dayGroup = document.createElement('div');
-                dayGroup.className = 'day-group';
-                const isToday = day.date === todayStr;
-                
-                let dayHtml = `
-                    <div class="day-label">${day.date} ${isToday ? '(今天)' : ''}</div>
-                    <div class="day-content">
-                `;
-
-                const sortedHours = Object.keys(day.slots).map(Number).sort((a,b) => a-b);
-                
-                sortedHours.forEach(hour => {
-                    const isActive = isToday && currentHour >= hour && currentHour < hour + 2;
-                    const startTime = hour.toString().padStart(2, '0') + ":00";
-                    const endTime = ((hour + 2) % 24).toString().padStart(2, '0') + ":00";
-                    const events = day.slots[hour].split('|');
-                    
-                    dayHtml += `
-                        <div class="time-row ${isActive ? 'active-row' : ''}">
-                            <div class="time-indicator">
-                                <div class="oswald">${startTime}</div>
-                                <div class="text-[10px] opacity-40">~</div>
-                                <div class="oswald">${endTime}</div>
-                            </div>
-                            <div class="event-grid">
-                    `;
-
-                    events.forEach(eventText => {
-                        const isCompleted = completedEvents.includes(eventText);
-                        const diffKey = getDiffKey(eventText);
-                        const parts = eventText.split(' ');
-                        const name = parts[0];
-                        const diff = parts[1] || '一般';
-
-                        dayHtml += `
-                            <div class="char-card diff-${diffKey} ${isCompleted ? 'is-completed' : ''} cursor-pointer"
-                                 onclick="toggleEvent('${eventText}')">
-                                <div class="char-info">
-                                    <span class="char-name">${name}</span>
-                                    <span class="char-diff diff-text-${diffKey}">${diff}</span>
-                                </div>
-                                <input type="checkbox" class="complete-cb pointer-events-none"
-                                    ${isCompleted ? 'checked' : ''} 
-                                    readonly>
-                            </div>
-                        `;
-                    });
-
-                    dayHtml += `</div></div>`;
-                });
-
-                dayHtml += `</div>`;
-                dayGroup.innerHTML = dayHtml;
-                root.appendChild(dayGroup);
-            });
-        }
-        window.onload = render;
-    </script>
 </body>
 </html>
-
-
-
-
-
